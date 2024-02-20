@@ -1,0 +1,32 @@
+import com.vd.drools.request.ProvidentFundRequest;
+global com.vd.drools.response.ProvidentFundResponse response;
+
+dialect "mvel"
+
+rule "one to two years of exp.."
+    when
+        ProvidentFundRequest(experience>=0 && experience<=3);
+    then
+        response.setProvidentCut("5% of basic");
+end;
+
+rule "2 to 4"
+    when
+        ProvidentFundRequest(experience>3 && experience<=7);
+    then
+        response.setProvidentCut("4% of basic");
+end;
+
+rule "4 to 6"
+    when
+        ProvidentFundRequest(experience>7 && experience<=10);
+    then
+        response.setProvidentCut("3% of basic");
+end;
+
+rule "greater than 6"
+    when
+        ProvidentFundRequest(experience>10);
+    then
+        response.setProvidentCut("1.5% of basic");
+end;
